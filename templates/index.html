@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css') }}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src=".{{url_for('static', filename='main.js') }}"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="container">
+			<div style="float: right;">
+				<div style="display: inline;">
+					<label style="display: inline;">Email: </label>
+					<input type="email" name="emailaddress" id="email"/>
+				</div>
+				<div style="display: inline;">
+					<label style="display: inline;">Password:</label>
+					<input type="password" name="emailpassword" id="password"/>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#groupOrganizers" data-toggle="tab">To Meetup Organizer</a></li>
+				<li><a href="#groupMemebers" data-toggle="tab">To Meetup Memebers</a></li>
+			</ul>
+			<div class="tab-content clearfix">
+				<div class="tab-pane active" id="groupOrganizers">
+					<div class="col-sm-6 col-md-6 col-lg-6">
+						<label>Please put in the urls of the meetup group where you want us to contact the meetup group manager:</label>
+						<textarea class="form-control" id="organizers_url" placeholder="Please input or copy & paste link url of gruop organizers."></textarea>
+					</div>
+					<div class="col-sm-6 col-md-6 col-lg-6">
+						<label>Please type in (or copay and paste) the message you would like us to send to the group manager:</label>
+						<textarea class="form-control" id="organizers_message" disabled="disabled" placeholder="Please click 'Add Message' Button for input."></textarea>
+						<button onclick="addMessageOrg()" id="msg_btn1" class="btn btn-primary">Add Message</button>
+					</div>
+					<div class="btn_start">
+						<button id="org_start" onclick="onSendToOrganizers()" class="btn btn-primary">Start</button>
+					</div>
+				</div>
+				<div class="tab-pane" id="groupMemebers">
+					<div class="col-sm-6 col-md-6 col-lg-6">
+						<label>Please put in the url of the meetup you would like us to send a message to each of its members</label>
+						<textarea class="form-control" id="members_url" placeholder="Please input or copy & paste link url of gruop members."></textarea>
+					</div>
+					<div class="col-sm-6 col-md-6 col-lg-6">
+						<label>Please type in (or copay and paste) the message you would like us to send to each and every member of the meetup group:</label>
+						<textarea class="form-control" id="members_message" disabled="disabled" placeholder="Please click 'Add Message' Button for input."></textarea>
+						<button onclick="addMessageMember()" id="msg_btn2" class="btn btn-primary">Add Message</button>
+					</div>
+					<div class="btn_start">
+						<button id="member_start" onclick="onSendToMembers()" class="btn btn-primary">Start</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
