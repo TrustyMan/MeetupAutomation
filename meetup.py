@@ -16,7 +16,7 @@ login_url='https://secure.meetup.com/login/'
 
 
 def wait_and_click(browser, path):
-    WebDriverWait(browser, 10).until(
+    WebDriverWait(browser, 20).until(
         EC.element_to_be_clickable((By.XPATH, path))).click()
 
 def wait_and_send_keys(browser, path, message):
@@ -39,7 +39,7 @@ def login(browser, mail_address, mail_password):
     try:
         sId = browser.session_id;
         browser.get(login_url)
-        # browser.implicitly_wait(60)
+        browser.implicitly_wait(3)
         wait_and_click(browser, '//*[@id="button-google"]')
         wait_and_send_keys(browser, '//*[@id="identifierId"]', mail_address)
         wait_and_click(browser, '//*[@id="identifierNext"]')
@@ -49,9 +49,9 @@ def login(browser, mail_address, mail_password):
         # wait_and_send_keys(browser, '//*[@id="password"]', mail_password)
         # wait_and_click(browser, '//*[@name="submitButton"]')
         # while(sId == browser.session_id):
-        #     time.sleep(5)
+        # time.sleep(60)
         # print(browser.session_id)
-        time.sleep(3)
+        # time.sleep(5)
         return browser.session_id
     except Exception as ex:
         print(ex)
