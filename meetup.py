@@ -20,7 +20,7 @@ def wait_and_click(browser, path):
         EC.element_to_be_clickable((By.XPATH, path))).click()
 
 def wait_and_send_keys(browser, path, message):
-    WebDriverWait(browser, 10).until(
+    WebDriverWait(browser, 30).until(
         EC.element_to_be_clickable((By.XPATH, path))).send_keys(message)
 
 def getBrowser():
@@ -40,17 +40,18 @@ def login(browser, mail_address, mail_password):
         sId = browser.session_id;
         browser.get(login_url)
         # browser.implicitly_wait(60)
-        # wait_and_click(browser, '//*[@id="button-google"]')
-        # wait_and_send_keys(browser, '//*[@id="identifierId"]', mail_address)
-        # wait_and_click(browser, '//*[@id="identifierNext"]')
-        # wait_and_send_keys(browser, '//*[@id="password"]/div[1]/div/div/input', mail_password)
-        # wait_and_click(browser, '//*[@id="passwordNext"]')
-        wait_and_send_keys(browser, '//*[@id="email"]', mail_address)
-        wait_and_send_keys(browser, '//*[@id="password"]', mail_password)
+        wait_and_click(browser, '//*[@id="button-google"]')
+        wait_and_send_keys(browser, '//*[@id="identifierId"]', mail_address)
+        wait_and_click(browser, '//*[@id="identifierNext"]')
+        wait_and_send_keys(browser, '//*[@id="password"]/div[1]/div/div/input', mail_password)
+        wait_and_click(browser, '//*[@id="passwordNext"]')
+        # wait_and_send_keys(browser, '//*[@id="email"]', mail_address)
+        # wait_and_send_keys(browser, '//*[@id="password"]', mail_password)
         # wait_and_click(browser, '//*[@name="submitButton"]')
-        while(sId == browser.session_id):
-            time.sleep(5)
-        print(browser.session_id)
+        # while(sId == browser.session_id):
+        #     time.sleep(5)
+        # print(browser.session_id)
+        time.sleep(3)
         return browser.session_id
     except Exception as ex:
         print(ex)

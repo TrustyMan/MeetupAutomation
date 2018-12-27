@@ -34,6 +34,7 @@ def sendMessageOrg():
 					print(organizer)
 					print("message:")
 					print(message)
+	mtup.closeBrowser(browser)
 	return "ok"
 
 @app.route("/sendMessageMembers", methods=['POST'])
@@ -43,6 +44,24 @@ def sendMessageMembers():
 	password = data['password']
 	members = data['members']
 	messages = data['messages']
+	browser = mtup.getBrowser()
+	# print(type(browser))
+	print(datas)
+	print("email:")
+	print(email)
+	print("password:")
+	print(password)
+	sId = mtup.login(browser,email, password)
+	for member in members:
+		for message in messages:
+			if member!='':
+				if message!='':
+					mtup.sendMessage(browser, member, message, sId)
+					print("member:")
+					print(member)
+					print("message:")
+					print(message)
+	mtup.closeBrowser(browser)
 	return "ok"
 
 @app.route("/stop", methods=['POST'])
