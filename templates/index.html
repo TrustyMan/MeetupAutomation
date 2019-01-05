@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="container" style="margin: 40px;">
-		<div class="container">
+		<div class="container" style="margin: 20px;">
 			<div style="float: right;">
 				<div style="display: inline;">
 					<label style="display: inline;">Email: </label>
@@ -38,7 +38,23 @@
 					<div class="col-sm-6 col-md-6 col-lg-6">
 						<label>Please type in (or copay and paste) the message you would like us to send to the group manager:</label>
 						<textarea class="form-control" id="organizers_message" disabled="disabled" placeholder="Please click 'Add Message' Button for input."></textarea>
-						<button onclick="addMessageOrg()" id="msg_btn1" class="btn btn-primary">Add Message</button>
+						<div class="form-group" style="margin:10px !important; width: 40%">
+							<button onclick="addMessageOrg()" id="msg_btn1" class="btn btn-primary">Add Message</button>
+							<label for="sel1">Select list (select one):</label>
+							<select class="form-control" id="sel_org" disabled="disabled" style="height: 50px !important;">
+								<option>0</option>
+								<option>1 day later</option>
+								<option>2 days later</option>
+								<option>3 days later</option>
+								<option>4 days later</option>
+								<option>5 days later</option>
+								<option>6 days later</option>
+								<option>7 days later</option>
+								<option>8 days later</option>
+								<option>9 days later</option>
+								<option>10 days later</option>
+							</select>
+						</div>
 					</div>
 					<div class="btn_start">
 						<button id="org_start" onclick="onSendToOrganizers()" class="btn btn-primary">Start</button>
@@ -52,7 +68,23 @@
 					<div class="col-sm-6 col-md-6 col-lg-6">
 						<label>Please type in (or copay and paste) the message you would like us to send to each and every member of the meetup group:</label>
 						<textarea class="form-control" id="members_message" disabled="disabled" placeholder="Please click 'Add Message' Button for input."></textarea>
-						<button onclick="addMessageMember()" id="msg_btn2" class="btn btn-primary">Add Message</button>
+						<div class="form-group" style="margin:10px !important; width: 40%">
+							<button onclick="addMessageMember()" id="msg_btn2" class="btn btn-primary">Add Message</button>
+
+							<label for="sel1">Select list (select one):</label>
+							<select class="form-control" id="sel_member" disabled="disabled" style="height: 50px !important;">
+								<option>1 day later</option>
+								<option>2 days later</option>
+								<option>3 days later</option>
+								<option>4 days later</option>
+								<option>5 days later</option>
+								<option>6 days later</option>
+								<option>7 days later</option>
+								<option>8 days later</option>
+								<option>9 days later</option>
+								<option>10 days later</option>
+							</select>
+						</div>
 					</div>
 					<div class="btn_start">
 						<button id="member_start" onclick="onSendToMembers()" class="btn btn-primary">Start</button>

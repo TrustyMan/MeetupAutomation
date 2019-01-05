@@ -2,6 +2,8 @@ import sys
 from flask import Flask, jsonify, render_template, request, Response
 import meetup as mtup
 import random, json
+import pastebin as pb
+import time
 
 app = Flask(__name__)
 
@@ -17,23 +19,52 @@ def sendMessageOrg():
 	password = datas['password']
 	organizers = datas['organizers']
 	messages = datas['messages']
-	browser = mtup.getBrowser()
+	timespaces = datas['timespaces']
+	for timespace in timespaces:
+		timespace = timespace[:-12]
+	print("TimeSpaces")
+	print(timespaces)
+	print("-------------------")
 	# print(type(browser))
+	msg_urls = list()
+	#upload messages to pasted.co and get url of messages
+	browser = pb.getBrowser()
+	for message in messages:
+		temp = list()
+		for organizer in organizers:
+			if organizer!='':
+				temp.append(pb.createMessageURL(browser, message))
+		msg_urls.append(temp)
+	timelist=list()
+	for timespace in timespaces:
+		temp = list()
+		for organizer in organizers:
+			if organizer!='':
+				temp.append(timespace[:-12])
+		timelist.append(temp)
+	pb.closeBrowser(browser)
+	print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	print(msg_urls)
+	print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	print(timelist)
+	print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	#Meetup Automation
+	browser = mtup.getBrowser()
 	print(datas)
 	print("email:")
 	print(email)
 	print("password:")
 	print(password)
+	time.sleep(5)
 	sId = mtup.login(browser,email, password)
-	for organizer in organizers:
-		for message in messages:
-			if organizer!='':
-				if message!='':
+	print(sId)
+	index = 0
+	for msg_url in msg_urls:
+		for message in msg_url:
+			for organizer in organizers:
+				if organizer!='':
 					mtup.sendMessage(browser, organizer, message, sId)
-					print("organizer:")
-					print(organizer)
-					print("message:")
-					print(message)
+			time.sleep(60)
 	mtup.closeBrowser(browser)
 	return "ok"
 
@@ -44,7 +75,16 @@ def sendMessageMembers():
 	password = data['password']
 	members = data['members']
 	messages = data['messages']
+	timespaces = data['timespaces']
 	browser = mtup.getBrowser()
+	msg_urls = list()
+	#upload messages to pasted.co and get url of messages
+	for message in messages:
+		if message!='':
+			msg_urls.append(pb.createMessageURL(browser, message))
+	print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	print(msg_urls)
+	print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	# print(type(browser))
 	print(datas)
 	print("email:")
@@ -52,15 +92,15 @@ def sendMessageMembers():
 	print("password:")
 	print(password)
 	sId = mtup.login(browser,email, password)
-	for member in memebers:
-		for message in messages:
+	for member in members:
+		for msg_url in msg_urls:
 			if member!='':
-				if message!='':
-					mtup.sendMessage(browser, memeber, message, sId)
+				if msg_url!='':
+					mtup.sendMessage(browser, member, msg_url, sId)
 					print("member:")
 					print(member)
 					print("message:")
-					print(message)
+					print(msg_url)
 	mtup.closeBrowser(browser)
 	return "ok"
 
@@ -69,4 +109,4 @@ def stop():
 	print("stop")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80)

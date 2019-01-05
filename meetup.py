@@ -5,7 +5,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import gmtime, strftime
 import datetime
 import time
-import pandas
 
 # balance = {}
 # profit = 0
@@ -16,11 +15,11 @@ login_url='https://secure.meetup.com/login/'
 
 
 def wait_and_click(browser, path):
-    WebDriverWait(browser, 10).until(
+    WebDriverWait(browser, 20).until(
         EC.element_to_be_clickable((By.XPATH, path))).click()
 
 def wait_and_send_keys(browser, path, message):
-    WebDriverWait(browser, 10).until(
+    WebDriverWait(browser, 30).until(
         EC.element_to_be_clickable((By.XPATH, path))).send_keys(message)
 
 def getBrowser():
@@ -37,20 +36,21 @@ def getBrowser():
 
 def login(browser, mail_address, mail_password):
     try:
-        sId = browser.session_id;
+        sId = browser.session_id
         browser.get(login_url)
-        # browser.implicitly_wait(60)
-        # wait_and_click(browser, '//*[@id="button-google"]')
-        # wait_and_send_keys(browser, '//*[@id="identifierId"]', mail_address)
-        # wait_and_click(browser, '//*[@id="identifierNext"]')
-        # wait_and_send_keys(browser, '//*[@id="password"]/div[1]/div/div/input', mail_password)
-        # wait_and_click(browser, '//*[@id="passwordNext"]')
-        wait_and_send_keys(browser, '//*[@id="email"]', mail_address)
-        wait_and_send_keys(browser, '//*[@id="password"]', mail_password)
+        browser.implicitly_wait(3)
+        wait_and_click(browser, '//*[@id="button-google"]')
+        wait_and_send_keys(browser, '//*[@id="identifierId"]', mail_address)
+        wait_and_click(browser, '//*[@id="identifierNext"]')
+        wait_and_send_keys(browser, '//*[@id="password"]/div[1]/div/div/input', mail_password)
+        wait_and_click(browser, '//*[@id="passwordNext"]')
+        # wait_and_send_keys(browser, '//*[@id="email"]', mail_address)
+        # wait_and_send_keys(browser, '//*[@id="password"]', mail_password)
         # wait_and_click(browser, '//*[@name="submitButton"]')
-        while(sId == browser.session_id):
-            time.sleep(5)
-        print(browser.session_id)
+        # while(sId == browser.session_id):
+        # time.sleep(60)
+        # print(browser.session_id)
+        time.sleep(5)
         return browser.session_id
     except Exception as ex:
         print(ex)
@@ -59,12 +59,13 @@ def login(browser, mail_address, mail_password):
 def sendMessage(browser, url, message, sId):
     try:
         browser.get(url)
-        browser.session_id = sId
         time.sleep(3)
+        browser.session_id = sId
         wait_and_click(browser, '//*[@class="j-composeNewMessage"]')
         wait_and_send_keys(browser, '//*[@id="messaging-new-convo"]', message)
+        time.sleep(3)
         wait_and_click(browser, '//*[@id="messaging-new-send"]')
-        # time.sleep(1000)
+        time.sleep(5)
     except Exception as ex:
         print(ex)
         pass
